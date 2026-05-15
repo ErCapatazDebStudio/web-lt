@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lara Tolosa - Cortometraje sobre ciberacoso y sus consecuencias">
+    <meta name="theme-color" content="#050505">
+    
+    <title>Lara Tolosa | Si lo ves, actúa... No te calles</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS - Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="assets/logo.png" alt="Lara Tolosa Logo" class="logo-img">
+                <span class="logo-text">LARA TOLOSA</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobre.html" class="nav-link">Sobre</a></li>
+                <li><a href="prevencion.html" class="nav-link">Prevención</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="assets/Lara%20Tolosa.mov" type="video/quicktime">
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <img src="assets/logo.png" alt="Logo" class="hero-logo" data-aos="fade-in" data-aos-duration="1000">
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="300">LARA TOLOSA</h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="600">Si lo ves, actúa… No te calles.</p>
+            <button class="hero-btn" data-aos="fade-up" data-aos-delay="900" onclick="openModal()">
+                <span class="btn-text">VER CORTOMETRAJE</span>
+                <span class="btn-icon">▶</span>
+            </button>
+        </div>
+
+        <div class="hero-scroll">
+            <span class="scroll-text">DESPLAZA</span>
+            <div class="scroll-arrow">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL VIDEO PLAYER -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <video id="mainVideo" controls controlsList="nodownload">
+                <source src="assets/Lara%20Tolosa.mov" type="video/quicktime">
+                <source src="assets/Lara%20Tolosa.mov" type="video/mp4">
+            </video>
+            <div class="video-info">
+                <h2>Lara Tolosa</h2>
+                <p>Duración: 3:18 minutos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-in">BIENVENIDO</h2>
+            
+            <div class="about-message" data-aos="zoom-in" data-aos-delay="200">
+                <p style="font-size: 20px; color: #d1d1d1; line-height: 2;">
+                    Este cortometraje es un relato crudo y realista sobre el ciberacoso. 
+                    Explora las historias de víctimas reales y su lucha contra el silencio digital.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="sobre.html" class="nav-link" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #b30000, #ff3333); border-radius: 5px; text-decoration: none; font-weight: 700; margin: 0 15px;">VER HISTORIA COMPLETA</a>
+                <a href="prevencion.html" class="nav-link" style="display: inline-block; padding: 15px 40px; border: 2px solid #0f4c81; border-radius: 5px; text-decoration: none; font-weight: 700; margin: 0 15px;">RECURSOS DE AYUDA</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>LARA TOLOSA</h4>
+                <p>Un cortometraje sobre conciencia social y prevención del ciberacoso.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Producción</h4>
+                <ul>
+                    <li>Producción: Vortex Studios</li>
+                    <li>Un proyecto de conciencia social</li>
+                    <li>Contra el ciberacoso</li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><strong>Teléfono de la Esperanza:</strong> 024</li>
+                    <li><strong>Pantallas Amigas:</strong> www.pantallasamigas.net</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Lara Tolosa. Vortex Studios. Todos los derechos reservados. | Proyecto de Conciencia Social</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
