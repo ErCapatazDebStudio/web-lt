@@ -1,4 +1,4 @@
 {
-  "public": true,
-  "env": {}
+  "buildCommand": "echo 'Static HTML site'",
+  "outputDirectory": "."
 }
