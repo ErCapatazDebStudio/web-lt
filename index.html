@@ -42,6 +42,7 @@
     <section id="hero" class="hero">
         <video class="hero-video" autoplay muted loop playsinline>
             <source src="assets/Lara%20Tolosa.mov" type="video/quicktime">
+            Tu navegador no soporta vídeo HTML5
         </video>
         <div class="hero-overlay"></div>
         
@@ -69,10 +70,12 @@
     <div id="videoModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <video id="mainVideo" controls controlsList="nodownload">
-                <source src="assets/Lara%20Tolosa.mov" type="video/quicktime">
-                <source src="assets/Lara%20Tolosa.mov" type="video/mp4">
-            </video>
+            <iframe
+  id="mainVideo"
+  src="https://player.cloudinary.com/embed/?cloud_name=dnmun0cbb&public_id=Lara_Tolosa_ugw6in"
+  allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+  allowfullscreen>
+</iframe>
             <div class="video-info">
                 <h2>Lara Tolosa</h2>
                 <p>Duración: 3:18 minutos</p>
