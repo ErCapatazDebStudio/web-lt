@@ -2,9 +2,13 @@
 function openModal() {
     const modal = document.getElementById('videoModal');
     modal.classList.add('active');
-    const video = document.getElementById('mainVideo');
-    video.play();
     document.body.style.overflow = 'hidden';
+    
+    // Load video blob when modal opens
+    loadVideoBlob().then(() => {
+        const video = document.getElementById('mainVideo');
+        video.play().catch(error => console.log('Autoplay prevented:', error));
+    });
 }
 
 function closeModal() {
@@ -144,3 +148,29 @@ console.log(
     '%cUn cortometraje sobre conciencia social',
     'font-size: 12px; color: #999;'
 );
+
+// ===== LOAD VIDEO AS BLOB =====
+async function loadVideoBlob() {
+    try {
+        const url = 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_ultra.mp4';
+        const response = await fetch(url, { mode: 'cors' });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const videoElement = document.getElementById('mainVideo');
+        if (videoElement) {
+            const source = videoElement.querySelector('source');
+            if (source) {
+                source.src = blobUrl;
+                videoElement.load();
+                console.log('Video loaded successfully from blob');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading video:', error);
+        const videoElement = document.getElementById('mainVideo');
+        if (videoElement) {
+            videoElement.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">Error cargando video. Por favor recarga la página.</p>';
+        }
+    }
+}
