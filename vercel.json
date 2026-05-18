@@ -1,9 +1,16 @@
 {
   "version": 2,
   "public": true,
-  "buildCommand": "echo 'Static HTML'",
-  "outputDirectory": ".",
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [
@@ -12,6 +19,20 @@
           "value": "public, max-age=31536000"
         }
       ]
+    }
+  ],
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "sobre.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "prevencion.html",
+      "use": "@vercel/static"
     }
   ]
 }
