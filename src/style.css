@@ -294,3 +294,22 @@ code {
     border-right-color: var(--border);
   }
 }
+.hero-video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 1;
+}
+
+.hero-overlay{
+    z-index: 2;
+    position: absolute;
+}
+
+.hero-content{
+    position: relative;
+    z-index: 3;
+}
