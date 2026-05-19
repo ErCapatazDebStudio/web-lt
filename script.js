@@ -1,22 +1,40 @@
 // ===== MODAL VIDEO PLAYER =====
 function openModal() {
     const modal = document.getElementById('videoModal');
+    if (!modal) {
+        console.error('Modal element not found');
+        return;
+    }
+    
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // Load video blob when modal opens
+    // Load video when modal opens
     loadVideoBlob().then(() => {
         const video = document.getElementById('mainVideo');
-        video.play().catch(error => console.log('Autoplay prevented:', error));
+        if (video && video.tagName === 'VIDEO') {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Autoplay prevented:', error);
+                });
+            }
+        }
+    }).catch(error => {
+        console.error('Error in openModal:', error);
     });
 }
 
 function closeModal() {
     const modal = document.getElementById('videoModal');
+    if (!modal) return;
+    
     modal.classList.remove('active');
     const video = document.getElementById('mainVideo');
-    video.pause();
-    video.currentTime = 0;
+    if (video && video.tagName === 'VIDEO') {
+        video.pause();
+        video.currentTime = 0;
+    }
     document.body.style.overflow = 'auto';
 }
 
@@ -152,25 +170,57 @@ console.log(
 // ===== LOAD VIDEO AS BLOB =====
 async function loadVideoBlob() {
     try {
-        const url = 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_ultra.mp4';
-        const response = await fetch(url, { mode: 'cors' });
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
         const videoElement = document.getElementById('mainVideo');
-        if (videoElement) {
-            const source = videoElement.querySelector('source');
-            if (source) {
-                source.src = blobUrl;
-                videoElement.load();
-                console.log('Video loaded successfully from blob');
+        if (!videoElement) {
+            console.error('Video element not found');
+            return;
+        }
+        
+        // Try multiple video sources
+        const videoSources = [
+            'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_ultra.mp4',
+            'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_compressed.mp4',
+            'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara%20Tolosa.mp4'
+        ];
+        
+        for (const videoUrl of videoSources) {
+            try {
+                console.log(`Attempting to load video from: ${videoUrl}`);
+                const response = await fetch(videoUrl, { 
+                    mode: 'cors',
+                    method: 'GET'
+                });
+                
+                if (response.ok) {
+                    console.log(`Video source successful: ${videoUrl}`);
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    
+                    // Clear existing content
+                    videoElement.innerHTML = '';
+                    
+                    // Create and add source element
+                    const sourceElement = document.createElement('source');
+                    sourceElement.src = blobUrl;
+                    sourceElement.type = 'video/mp4';
+                    videoElement.appendChild(sourceElement);
+                    videoElement.load();
+                    
+                    console.log('Video loaded successfully from blob');
+                    return;
+                }
+            } catch (error) {
+                console.warn(`Failed to load from ${videoUrl}:`, error.message);
             }
         }
+        
+        // If all sources fail
+        throw new Error('All video sources failed to load');
     } catch (error) {
         console.error('Error loading video:', error);
         const videoElement = document.getElementById('mainVideo');
         if (videoElement) {
-            videoElement.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">Error cargando video. Por favor recarga la página.</p>';
+            videoElement.innerHTML = '<p style="color: #999; padding: 20px; text-align: center; font-family: Poppins, sans-serif;">Lo siento, el video no está disponible en este momento. Por favor, recarga la página e intenta de nuevo.</p>';
         }
     }
 }
