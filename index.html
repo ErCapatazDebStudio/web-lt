@@ -70,14 +70,20 @@
     <div id="videoModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div id="videoContainer" style="width: 100%; height: 600px; background: #000; display: flex; align-items: center; justify-content: center;">
+            <div id="videoContainer" style="width: 100%; background: #000; border-radius: 8px; overflow: hidden;">
+                <!-- Fallback message while video loads -->
+                <div id="videoLoader" style="width: 100%; padding: 60px 20px; text-align: center; background: #000; min-height: 600px; display: flex; align-items: center; justify-content: center;">
+                    <p style="color: #999; font-family: Poppins, sans-serif; font-size: 16px;">Cargando reproductor de video...</p>
+                </div>
+                
+                <!-- HTML5 Video Player -->
                 <video
                     id="mainVideo"
                     width="100%"
                     height="600"
                     controls
                     controlsList="nodownload"
-                    style="width: 100%; height: 100%; object-fit: contain; max-width: 100%;">
+                    style="width: 100%; height: auto; display: none; background: #000;">
                 </video>
             </div>
             <div class="video-info">

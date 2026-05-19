@@ -171,32 +171,46 @@ console.log(
 async function loadVideoBlob() {
     try {
         const videoElement = document.getElementById('mainVideo');
-        if (!videoElement) {
-            console.error('Video element not found');
+        const loader = document.getElementById('videoLoader');
+        
+        if (!videoElement || !loader) {
+            console.error('Video elements not found');
             return;
         }
         
-        // Try multiple video sources
+        // Try multiple video sources with fallbacks
         const videoSources = [
-            'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_ultra.mp4',
-            'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_compressed.mp4',
-            'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara%20Tolosa.mp4'
+            {
+                url: 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_ultra.mp4',
+                name: 'Lara Tolosa Ultra (5MB)'
+            },
+            {
+                url: 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_compressed.mp4',
+                name: 'Lara Tolosa Compressed (14MB)'
+            },
+            {
+                url: 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara%20Tolosa.mp4',
+                name: 'Lara Tolosa Original (23MB)'
+            }
         ];
         
-        for (const videoUrl of videoSources) {
+        for (const source of videoSources) {
             try {
-                console.log(`Attempting to load video from: ${videoUrl}`);
-                const response = await fetch(videoUrl, { 
+                console.log(`Attempting: ${source.name}`);
+                loader.innerHTML = `<p style="color: #0f4c81; font-family: Poppins, sans-serif; font-size: 14px;">Cargando ${source.name}...</p>`;
+                
+                const response = await fetch(source.url, { 
                     mode: 'cors',
-                    method: 'GET'
+                    method: 'GET',
+                    headers: { 'Accept': 'video/mp4' }
                 });
                 
                 if (response.ok) {
-                    console.log(`Video source successful: ${videoUrl}`);
+                    console.log(`Successfully fetching: ${source.name}`);
                     const blob = await response.blob();
                     const blobUrl = URL.createObjectURL(blob);
                     
-                    // Clear existing content
+                    // Clear video element
                     videoElement.innerHTML = '';
                     
                     // Create and add source element
@@ -204,23 +218,48 @@ async function loadVideoBlob() {
                     sourceElement.src = blobUrl;
                     sourceElement.type = 'video/mp4';
                     videoElement.appendChild(sourceElement);
-                    videoElement.load();
                     
-                    console.log('Video loaded successfully from blob');
-                    return;
+                    // Show video player, hide loader
+                    videoElement.style.display = 'block';
+                    loader.style.display = 'none';
+                    
+                    // Load and try to play
+                    videoElement.load();
+                    console.log(`Video loaded successfully: ${source.name}`);
+                    return true;
                 }
             } catch (error) {
-                console.warn(`Failed to load from ${videoUrl}:`, error.message);
+                console.warn(`Failed: ${source.name} - ${error.message}`);
             }
         }
         
-        // If all sources fail
-        throw new Error('All video sources failed to load');
+        // If all sources failed
+        throw new Error('All video sources failed');
+        
     } catch (error) {
-        console.error('Error loading video:', error);
-        const videoElement = document.getElementById('mainVideo');
-        if (videoElement) {
-            videoElement.innerHTML = '<p style="color: #999; padding: 20px; text-align: center; font-family: Poppins, sans-serif;">Lo siento, el video no está disponible en este momento. Por favor, recarga la página e intenta de nuevo.</p>';
+        console.error('Critical error loading video:', error);
+        const loader = document.getElementById('videoLoader');
+        if (loader) {
+            loader.innerHTML = `
+                <div style="text-align: center;">
+                    <p style="color: #b30000; font-family: Poppins, sans-serif; font-weight: 700; margin-bottom: 10px;">
+                        ⚠ No se pudo cargar el video
+                    </p>
+                    <p style="color: #999; font-family: Poppins, sans-serif; font-size: 14px; margin-bottom: 20px;">
+                        Por favor recarga la página e intenta de nuevo
+                    </p>
+                    <button onclick="location.reload()" style="
+                        padding: 12px 30px;
+                        background: #0f4c81;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-family: Poppins, sans-serif;
+                        font-weight: 600;
+                    ">Recargar página</button>
+                </div>
+            `;
         }
     }
 }
