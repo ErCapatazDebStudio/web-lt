@@ -1,14 +1,14 @@
 {
   "name": "web-lara-tolosa",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "description": "Lara Tolosa - Cortometraje sobre ciberacoso",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "echo 'Static site'",
+    "build": "echo 'No build needed'",
+    "preview": "echo 'Serving static files'"
   },
-  "devDependencies": {
-    "vite": "^8.0.10"
+  "engines": {
+    "node": "18.x"
   }
 }
