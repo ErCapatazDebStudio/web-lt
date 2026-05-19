@@ -187,10 +187,6 @@ async function loadVideoBlob() {
             {
                 url: 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara_Tolosa_compressed.mp4',
                 name: 'Lara Tolosa Compressed (14MB)'
-            },
-            {
-                url: 'https://cdn.jsdelivr.net/gh/ErCapatazDebStudio/web-lt@main/assets/Lara%20Tolosa.mp4',
-                name: 'Lara Tolosa Original (23MB)'
             }
         ];
         
